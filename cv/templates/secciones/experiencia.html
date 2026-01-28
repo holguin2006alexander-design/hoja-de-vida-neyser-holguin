@@ -1,0 +1,21 @@
+{% extends "layout_dashboard.html" %}
+
+{% block dashboard_content %}
+
+<section class="content-card">
+  <h1>🛠 Experiencia laboral</h1>
+
+  {% for exp in items %}
+    <div class="item-card">
+      <h3>{{ exp.cargodesempenado }}</h3>
+      <p><b>Empresa:</b> {{ exp.nombrempresa }}</p>
+      <p><b>Fechas:</b> {{ exp.fechainicio }} → {{ exp.fechafin }}</p>
+      <p><b>Responsabilidades:</b> {{ exp.responsabilidades }}</p>
+    </div>
+  {% empty %}
+    <p>No hay experiencia registrada.</p>
+  {% endfor %}
+
+</section>
+
+{% endblock %}

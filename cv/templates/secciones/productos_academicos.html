@@ -1,0 +1,35 @@
+{% extends "layout_dashboard.html" %}
+{% block dashboard_content %}
+
+<h1>📘 Productos académicos</h1>
+
+<div class="cards-grid">
+{% for item in items %}
+  <div class="cv-card">
+
+    <h3>{{ item.nombreproducto }}</h3>
+
+    <div class="cv-desc">
+      {{ item.descripcion }}
+    </div>
+
+    {% if item.imagenproducto %}
+      <img src="{{ item.imagenproducto.url }}" class="cv-preview">
+    {% endif %}
+
+    <div class="cv-footer">
+      {% if item.certificado_imagen %}
+        <a href="{{ item.certificado_imagen.url }}" target="_blank" class="cv-btn primary">
+          👁 Ver documento
+        </a>
+        <a href="{{ item.certificado_imagen.url }}" download class="cv-btn outline">
+          ⬇ Descargar PDF
+        </a>
+      {% endif %}
+    </div>
+
+  </div>
+{% endfor %}
+</div>
+
+{% endblock %}

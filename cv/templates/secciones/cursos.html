@@ -1,0 +1,51 @@
+{% extends "layout_dashboard.html" %}
+{% block dashboard_content %}
+
+<header class="section-header">
+  <h1>🎓 Cursos realizados</h1>
+  <p class="text-muted">
+    Formación académica y certificaciones obtenidas.
+  </p>
+</header>
+
+<div class="cards-grid">
+
+{% for c in items %}
+  <div class="cv-card">
+
+    {% if c.totalhoras %}
+      <div class="cv-badge">{{ c.totalhoras }}h</div>
+    {% endif %}
+
+    <h3>{{ c.nombrecurso }}</h3>
+
+    <div class="cv-meta">
+      🏢 {{ c.entidadpatrocinadora|default:"—" }}<br>
+      📅 {{ c.fechainicio }} – {{ c.fechafin }}
+    </div>
+
+    {% if c.descripcioncurso %}
+      <p class="cv-desc">
+        {{ c.descripcioncurso }}
+      </p>
+    {% endif %}
+
+    {% if c.certificado_imagen %}
+      <div class="cv-preview">
+        <a href="{{ c.certificado_imagen.url }}" target="_blank" class="cert-preview">
+  <img src="{{ c.certificado_imagen.url }}" alt="Certificado">
+</a>
+
+      </div>
+    {% else %}
+      <p class="cv-desc">ℹ Sin certificado adjunto</p>
+    {% endif %}
+
+  </div>
+{% empty %}
+  <p class="text-muted">No hay cursos registrados.</p>
+{% endfor %}
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "layout_dashboard.html" %}
+
+{% block dashboard_content %}
+
+<section class="content-card">
+  <h1>🧍 Datos personales</h1>
+
+  <div class="item-card">
+    <p><b>Nombre:</b> {{ perfil.nombres }} {{ perfil.apellidos }}</p>
+    <p><b>Nacionalidad:</b> {{ perfil.nacionalidad }}</p>
+    <p><b>Lugar de nacimiento:</b> {{ perfil.lugarnacimiento }}</p>
+    <p><b>Fecha de nacimiento:</b> {{ perfil.fechanacimiento }}</p>
+    <p><b>Cédula:</b> {{ perfil.numerocedula }}</p>
+    <p><b>Sexo:</b> {{ perfil.sexo }}</p>
+    <p><b>Estado civil:</b> {{ perfil.estadocivil }}</p>
+    <p><b>Licencia:</b> {{ perfil.licencia }}</p>
+    <p><b>Teléfono:</b> {{ perfil.telefonoconv }}</p>
+    <p><b>Celular:</b> {{ perfil.telefonofijo }}</p>
+    <p><b>Dirección domicilio:</b> {{ perfil.dirdomicilio }}</p>
+    <p><b>Dirección trabajo:</b> {{ perfil.dirtrabajo }}</p>
+  </div>
+
+</section>
+
+{% endblock %}

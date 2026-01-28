@@ -1,0 +1,21 @@
+{% extends "layout_dashboard.html" %}
+
+{% block dashboard_content %}
+
+<section class="content-card">
+  <h1>🏅 Reconocimientos</h1>
+
+  {% for r in items %}
+    <div class="item-card">
+      <h3>{{ r.tiporeconocimiento }}</h3>
+      <p><b>Entidad:</b> {{ r.entidadpatrocinadora }}</p>
+      <p><b>Fecha:</b> {{ r.fechareconocimiento }}</p>
+      <p>{{ r.descripcionreconocimiento }}</p>
+    </div>
+  {% empty %}
+    <p>No hay reconocimientos registrados.</p>
+  {% endfor %}
+
+</section>
+
+{% endblock %}

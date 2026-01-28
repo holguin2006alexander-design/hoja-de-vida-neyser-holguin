@@ -1,0 +1,78 @@
+/* ==============================
+   NAVBAR CORPORATIVO
+================================ */
+
+.navpro,
+.nav-top {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 22px;
+
+  background-color: #0f2a44;
+  border-bottom: 3px solid #1f4fd8;
+}
+
+/* Marca */
+.nav-brand,
+.navpro__brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 16px;
+}
+
+/* Links */
+.nav-links,
+.navpro__tabs {
+  display: flex;
+  gap: 18px;
+}
+
+.nav-links a,
+.navpro__tab {
+  color: #e5e7eb;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+  padding-bottom: 4px;
+  border-bottom: 2px solid transparent;
+}
+
+.nav-links a:hover,
+.navpro__tab:hover {
+  color: #ffffff;
+  border-bottom: 2px solid #1f4fd8;
+}
+
+/* Botón admin */
+.nav-admin,
+.navpro__admin {
+  background-color: #1f4fd8;
+  color: #ffffff;
+  text-decoration: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.nav-admin:hover,
+.navpro__admin:hover {
+  background-color: #173db5;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .nav-links,
+  .navpro__tabs {
+    display: none;
+  }
+}

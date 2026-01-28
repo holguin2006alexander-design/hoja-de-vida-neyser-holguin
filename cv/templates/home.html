@@ -1,0 +1,156 @@
+{% extends "layout_dashboard.html" %}
+{% load static %}
+
+{% block dashboard_content %}
+
+<!-- HEADER -->
+<header class="topbar">
+  <div>
+    <h1>Hoja de Vida</h1>
+    <p class="text-muted">Vista general de tu perfil profesional</p>
+  </div>
+
+  <div class="top-actions">
+    {% if permitir_impresion %}
+      <button class="btn-primary" onclick="openPdfModal()">
+        Generar PDF
+      </button>
+    {% endif %}
+    <a href="/admin/" class="btn-admin">Admin</a>
+  </div>
+</header>
+
+<!-- PERFIL PRINCIPAL -->
+<section class="profile-card">
+  <div class="profile-avatar">
+    {% if perfil.foto %}
+      <img
+        src="{{ perfil.foto.url }}"
+        alt="Foto de perfil"
+        class="profile-avatar-img"
+      >
+    {% else %}
+      {{ perfil.nombres|first }}{{ perfil.apellidos|first }}
+    {% endif %}
+  </div>
+
+  <div class="profile-info">
+    <h2>{{ perfil.nombres }} {{ perfil.apellidos }}</h2>
+    <p>{{ perfil.nacionalidad }} · {{ perfil.lugarnacimiento }}</p>
+
+    <div class="profile-meta">
+      <span>
+        Impresión:
+        {% if perfil.permitir_impresion %}
+          <b class="ok">Habilitada</b>
+        {% else %}
+          <b class="bad">Deshabilitada</b>
+        {% endif %}
+      </span>
+
+      <span>
+        Perfil activo:
+        {% if perfil.perfilactivo %}
+          <b class="ok">Sí</b>
+        {% else %}
+          <b class="bad">No</b>
+        {% endif %}
+      </span>
+    </div>
+  </div>
+</section>
+
+<!-- INFORMACIÓN PERSONAL -->
+<section class="content-card">
+  <h2>Información personal</h2>
+
+  {% if perfil.descripcionperfil %}
+    <div class="about-box">
+      <h3>Sobre mí</h3>
+      <p>{{ perfil.descripcionperfil }}</p>
+    </div>
+  {% endif %}
+
+  <div class="info-grid">
+    <div class="info-col">
+      <h3>🪪 Identificación</h3>
+      <p><b>Cédula:</b> {{ perfil.numerocedula }}</p>
+      <p><b>Nacionalidad:</b> {{ perfil.nacionalidad }}</p>
+      <p><b>Lugar nacimiento:</b> {{ perfil.lugarnacimiento }}</p>
+      <p><b>Fecha nacimiento:</b> {{ perfil.fechanacimiento }}</p>
+      <p><b>Sexo:</b> {{ perfil.sexo }}</p>
+    </div>
+
+    <div class="info-col">
+      <h3>📞 Contacto</h3>
+      <p><b>Estado civil:</b> {{ perfil.estadocivil }}</p>
+      <p><b>Licencia:</b> {{ perfil.licenciaconducir }}</p>
+      <p><b>Teléfonos:</b>
+        {{ perfil.telefonoconvencional|default:"—" }} /
+        {{ perfil.telefonofijo|default:"—" }}
+      </p>
+
+      {% if perfil.sitioweb %}
+        <p>
+          <b>Web:</b>
+          <a href="{{ perfil.sitioweb }}" target="_blank">Visitar</a>
+        </p>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<!-- RESUMEN SIMPLE -->
+<section class="content-card">
+  <h2>Resumen profesional</h2>
+
+  <div class="stats-simple">
+    <div class="stat-item"><strong>{{ counts.cursos }}</strong><span>Cursos</span></div>
+    <div class="stat-item"><strong>{{ counts.experiencias }}</strong><span>Experiencias</span></div>
+    <div class="stat-item"><strong>{{ counts.prod_acad }}</strong><span>Prod. Acad.</span></div>
+    <div class="stat-item"><strong>{{ counts.prod_lab }}</strong><span>Prod. Lab.</span></div>
+    <div class="stat-item"><strong>{{ counts.reconoc }}</strong><span>Reconoc.</span></div>
+    <div class="stat-item"><strong>{{ counts.venta }}</strong><span>Venta</span></div>
+  </div>
+</section>
+
+<!-- ================= MODAL PDF ================= -->
+<div id="pdfModal" class="modal-overlay">
+  <div class="modal-card">
+    <h2>Seleccionar secciones para PDF</h2>
+
+    <form id="pdfForm">
+      <label><input type="checkbox" name="experiencia" checked> Experiencia</label>
+      <label><input type="checkbox" name="cursos" checked> Cursos / Títulos</label>
+      <label><input type="checkbox" name="reconocimientos" checked> Reconocimientos</label>
+      <label><input type="checkbox" name="prod_acad" checked> Prod. Académicos</label>
+      <label><input type="checkbox" name="prod_lab" checked> Prod. Laborales</label>
+      <label><input type="checkbox" name="venta"> Venta Garage</label>
+
+      <div class="modal-actions">
+        <button type="button" class="btn-cancel" onclick="closePdfModal()">Cancelar</button>
+        <button type="submit" class="btn-primary">Generar PDF</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- SCRIPT -->
+<script>
+function openPdfModal() {
+  document.getElementById("pdfModal").style.display = "flex";
+}
+
+function closePdfModal() {
+  document.getElementById("pdfModal").style.display = "none";
+}
+
+document.getElementById("pdfForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+  const params = new URLSearchParams(new FormData(this)).toString();
+  window.open("{% url 'imprimir_hoja_vida' %}?" + params, "_blank");
+  closePdfModal();
+});
+</script>
+
+{% endblock %}
